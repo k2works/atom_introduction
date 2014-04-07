@@ -80,10 +80,93 @@ Gitを使っているなら```cmd-shift-b```で編集中・レポジトリ未登
 設定の詳細は[こちら](https://atom.io/docs/v0.84.0/customizing-atom)
 
 ## <a name="2">カスタマイズ</a>
+### テーマを変える
+設定を変更する、テーマを調整するまたはパッケージをインストールするには```cmd-,```押して設定画面を開くだけです。
+
+Atomはいくつかのシンタックステーマ同様に明るいのと暗いUIテーマが存在します。自分自身のテーマを作成することもできます。
+
+テーマを変更するには設定画名を開いて(```cmd-,```) 画面左側のテーマセクションを選択します。シンタックスとUIテーマを変更するドロップダウンメニューが表示されているはずです。
+
+また、機能テーマを探したり特定のテーマを検索してインストールすることもできます。
+
+### パッケージをインストールする
+設定画面(```cmd-,```)左側の```Packages``` セクションからバンドルされていないパッケージをインストールすることができます。いろいろな機能のパッケージを見れるでしょう、またここからパッケージの検索ができます。ここに表示されているパッケージは公式パッケージ登録サイトである[atom.io](https://atom.io/packages)で公開されています。
+
+また、コマンドラインから```apm``` を使ってパケージをインストールすることができます。  
+以下のコマンドをターミナルで実行して```apm```がインストールされているか確認して下さい。
+
+```
+apm help install
+```
+
+```apm``` インストールコマンド詳細メッセージが表示されているはずです。  
+もし表示されないなら、_Atom > Install Shell Commands_ メーニューから```apm```と```atom```コマンドをインストールしてください。
+
+```apm install``` コマンドでパッケージをインストールできます：  
+```apm install <package_name>``` で最新バージョンをインストール  
+```apm install <package_name>@<package_version>``` で特定のバージョンをインストール  
+例えば```apm install emmet@0.1.5``` で0.1.5リリースの[Emmet](https://github.com/atom/emmet)パッケージを```~/.atom/packages.``` にインストールします。
+
+```apm``` を使って新しいパッケージを検索してインストールすることもできます:  
+```apm search coffee``` CoffeeScriptパッケージを探します。  
+```apm view emmet``` 特定のパッケージに関する詳細情報が表示されます。
+
+### キーバインドのカスマイズ
+Atomは_~/.atom_ディレクトリにある[CoffeeScript-style JSON (CSON)](https://github.com/atom/season)で構成された```config.cson```ファイルから環境設定を読み込みます:
+
+```cson
+'core':
+  'excludeVcsIgnoredPaths': true
+'editor':
+  'fontSize': 18
+```
+
+設定はcoreとeditorという一組のネームスペースまたはパッケージでグルーピングされています。  
+設定メニューの_Atom > Open Your Config_からこのファイルを開くことができます。
+
+### さらに進んだカスマイズ
++ ```core```
+  + ```disabledPackages```: 利用不可能なパッケージ名配列
+  + ```excludeVcsIgnoredPaths```: .gitignoreで指定されたファイルは検索しない
+  + ```ignoredNames```: Atom全般で無視するファイル名
+  + ```projectHome```: プロジェクトが配置されていると想定されているディレクトリ
+  + ```themes```: 読み込まれるテーマ名配列、カスケード配置
++ ```editor```
+  + ```autoIndent```: オートインデントの有効・無効基本設定(デフォルト有効)
+  + ```nonWordCharacters```: 文字区切り用非文字
+  + ```fontSize```: フォントサイズ
+  + ```fontFamily```: フォント
+  + ```invisibles```: 非表示文字コードを定義した連想配列
+    + ```tab```: タブ文字
+    + ```cr```: キャリッジリターン(Microsoft-style line endings)
+    + ```eol```: ```\n``` 文字
+    + ```space```: スペースを表現する文字
+  + ```normalizeIndentOnPaste```: タブスペース変換の有効・無効
+  + ```preferredLineLength```: 一行の文字数(デフォルト ```80```)
+  + ```showInvisibles```: 非表示文字を表示するかどうか
+  + ```showIndentGuide```: インデントガイドの表示・非表示
+  + ```showLineNumbers```: 行番号の表示・非表示
+  + ```softWrap```: 行折り返しの有効・無効
+  + ```softWrapAtPreferredLineLength```: 指定した文字数で業折り返しの有効・無効
+  + ```tabLength```: タブ内おスペース数(デフォルト ```2```)
++ ```fuzzyFinder```
+  + ```ignoredNames```: fuzzy-finderで無視するファイル名
++ ```whitespace```
+  + ```ensureSingleTrailingNewline```: ファイル末尾の複数改行を無くすかどうか
+  + ```removeTrailingWhitespace```: 行末の空白を無くす有効・無効
++ ```wrap-guide```
+  + ```columns```: キーが現在のエディタのカラム位置に対応付けられた```pattern``` と ```column``` の連想配列。
+
+#### 主要項目の設定
+#### お手軽パーソナルハック
+##### init.coffee
+##### styles.less
+
 ## <a name="3">パッケージ作成</a>
 ## <a name="4">テーマ作成</a>
 ## <a name="5">パッケージ公開</a>
 
 # 参照
 [Atom](https://atom.io/)  
-[Documentation](https://atom.io/docs/latest/)
+[Documentation](https://atom.io/docs/latest/)  
+[GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown)
