@@ -2,8 +2,12 @@ Atom入門
 =================
 
 # 目的
-GitHub製エディタAtomの操作方法を修得するため  
-公式サイトのドキュメントページを超訳する
+GitHub製エディタAtomの操作方法を修得するため公式サイトのドキュメントページを超訳する  
++ [はじめに](https://atom.io/docs/v0.84.0/getting-started)  
++ [カスタマイズ](https://atom.io/docs/v0.84.0/customizing-atom)  
++ [パッケージの作成](https://atom.io/docs/v0.84.0/creating-a-package)  
++ [テーマ作成](https://atom.io/docs/v0.84.0/creating-a-theme)  
++ [パッケージの公開](https://atom.io/docs/v0.84.0/publishing-a-package)  
 
 # 前提
 | ソフトウェア     | バージョン    | 備考         |
@@ -112,19 +116,35 @@ apm help install
 ```apm view emmet``` 特定のパッケージに関する詳細情報が表示されます。
 
 ### キーバインドのカスマイズ
+Atomのキーマップはスタイルシートに似ています。スタイルシート同様、スタイルの要素にはセレクターを使います。Atomのキーマップは特定のコンテキストイベントに関連付けられたキーストロークのセレクターを使います。これはAtomのビルトインキーマップから抜粋したサンプルです。
+```
+'.editor':
+  'enter': 'editor:newline'
+
+'.mini.editor input':
+  'enter': 'core:confirm'
+```
+キーマップは２つの異なるコンテキストの意味を```enter```に定義します。通常のエディタでは```enter```を押すことは新しい行に改行するイベントを```editor:newline```に発生させます。しかし、もし同じキー操作がmini-editorセレクタで定義されていたならばかわりに特定のセレクタに関連付けられた```core:confirm```イベントを発生させます。
+
+デフォルトでは,```~/.atom/keymap.cson```がAtom起動時に読み込まれます。常に最後に読み込まれる、Atomの主要キーマップまたはサードパーティ製パッケージに関連付けられたキーバインドを上書きできます。
+
+_Atom > Open Your Keymap_メニューから開くことができます。
+
+実行可能なコマンドの全てを知ることができます。設定画面(```cmd-,```)を開いて_Keybindings_タブを選択してください。現在使えるキーバインディングを確認することができます。
+
+### さらに進んだカスマイズ
 Atomは_~/.atom_ディレクトリにある[CoffeeScript-style JSON (CSON)](https://github.com/atom/season)で構成された```config.cson```ファイルから環境設定を読み込みます:
 
-```cson
+```json
 'core':
   'excludeVcsIgnoredPaths': true
 'editor':
   'fontSize': 18
 ```
 
-設定はcoreとeditorという一組のネームスペースまたはパッケージでグルーピングされています。  
+設定は```core```と```editor```という一組のネームスペースまたはパッケージでグルーピングされています。  
 設定メニューの_Atom > Open Your Config_からこのファイルを開くことができます。
-
-### さらに進んだカスマイズ
+#### 主要項目の設定
 + ```core```
   + ```disabledPackages```: 利用不可能なパッケージ名配列
   + ```excludeVcsIgnoredPaths```: .gitignoreで指定されたファイルは検索しない
@@ -157,10 +177,33 @@ Atomは_~/.atom_ディレクトリにある[CoffeeScript-style JSON (CSON)](http
 + ```wrap-guide```
   + ```columns```: キーが現在のエディタのカラム位置に対応付けられた```pattern``` と ```column``` の連想配列。
 
-#### 主要項目の設定
 #### お手軽パーソナルハック
 ##### init.coffee
+Atomの読み込みが完了した時、_~/.atom_ディレクトリの_init.coffee_ が評価されます。これはあなたが自由にカスタマイズできる[CoffeeScript](http://coffeescript.org/)コードです。ファイル内のコードからAtomのAPIに完全アクセスできます。もしカスタマイズが広範囲になったら[パッケージ作成](https://atom.io/docs/v0.84.0/creating-a-package)も検討してみてください。
+
+_Atom > Open Your Init Script_メニューからこのファイルを開くことができます。
+
+例えば、あなたが音の設定を有効にしたいなら_~/.atom/init.coffee_ファイルに以下のコードを追加してAtom起動時に音がなるようにしてください:
+```javascript
+atom.beep()
+```
+このファイルはまたJavaScriptコードで記述された_init.js_でも有効です。
+
 ##### styles.less
+もしあなたが公開するつもりのないやっつけ仕事のスタイル変更をしたいなら,_~/.atom_のディレクトリに_styles.less_ファイルを追加してください。
+このファイルは_Atom > Open Your Stylesheet_メニューから開くことができます。
+
+例えば、あなたがカーソルの色を変えたいなら以下のルールを_~/.atom/styles.less_に適用すること実現できます。
+
+```css
+.editor .cursor {
+  border-color: pink;
+}
+```
+
+LESSって何？そんな人は[ココ](http://lesscss.org/)
+
+また、このファイルはCSSで記述された_styles.css_でも有効です。
 
 ## <a name="3">パッケージ作成</a>
 ## <a name="4">テーマ作成</a>
