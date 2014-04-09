@@ -206,9 +206,9 @@ LESSって何？そんな人は[ココ](http://lesscss.org/)
 また、このファイルはCSSで記述された_styles.css_でも有効です。
 
 ## <a name="3">パッケージ作成</a>
-Packages are at the core of Atom. Nearly everything outside of the main editor is handled by a package. That includes "core" pieces like the file tree, status bar, syntax highlighting, and more.
+パッケージはAtomのコアです。ほとんどすべての主要機能がパッケージによってコントロールされています。"core"部品としては[file tree](https://github.com/atom/tree-view), [status bar](https://github.com/atom/status-bar), [syntax highlighting](https://github.com/atom/language-coffee-script),などが含まれています。
 
-A package can contain a variety of different resource types to change Atom's behavior. The basic package layout is as follows:
+パッケージはAtomの挙動を変えるいろいろな種類のリソースが含まれています。基本パケージのレイアウトは以下:
 ```
 my-package/
   grammars/
@@ -221,42 +221,42 @@ my-package/
   index.coffee
   package.json
 ```  
-Not every package will have (or need) all of these directories.
+パッケージにはこれらディレクトリすべてが必要というわけではありません。
 
-We have a tutorial on creating your first package.
+チュートリアルは[こちら](https://atom.io/docs/v0.84.0/your-first-package)です。
 
-There are also guides for converting TextMate bundles and TextMate themes so they work in Atom.
+また、TexMateのコンバートガイド([TextMate bundles](https://atom.io/docs/v0.84.0/converting-a-text-mate-bundle),[TextMate themes](https://atom.io/docs/v0.84.0/converting-a-text-mate-theme))もあります。
 
 ### package.json
 
-Similar to npm packages, Atom packages contain a package.json file in their top-level directory. This file contains metadata about the package, such as the path to its "main" module, library dependencies, and manifests specifying the order in which its resources should be loaded.
+[npm packages](http://en.wikipedia.org/wiki/Npm_(software))同様、Atomパッケージは最上位ディレクトリに_package.json_ファイルが含まれています。このファイルにはリソース読み込みに必要な"main"モジュールパス,依存ライブラリそして特定のマニフェストなどパッケージ関するメタ情報が含まれています。
 
-In addition to the regular npm package.json keys available, Atom package.json files have their own additions.
+加えて標準の[npm package.json keys](https://www.npmjs.org/doc/json.html)が使えます。Atomのpackage.jsonファイルは追加項目を持っています。
 
-+ ```main``` (Required): the path to the CoffeeScript file that's the entry point to your package
-+ ```stylesheets``` (Optional): an Array of Strings identifying the order of the stylesheets your package needs to load. If not specified, stylesheets in the stylesheets directory are added alphabetically.
-+ ```keymaps``` (Optional): an Array of Strings identifying the order of the key mappings your package needs to load. If not specified, mappings in the keymaps directory are added alphabetically.
-+ ```menus``` (Optional): an Array of Strings identifying the order of the menu mappings your package needs to load. If not specified, mappings in the menus directory are added alphabetically.
-+ ```snippets``` (Optional): an Array of Strings identifying the order of the snippets your package needs to load. If not specified, snippets in the snippets directory are added alphabetically.
-+ ```activationEvents``` (Optional): an Array of Strings identifying events that trigger your package's activation. You can delay the loading of your package until one of these events is triggered.
++ ```main``` (必須): パッケージの起点となるCoffeeScriptファイルのパス
++ ```stylesheets``` (オプショナル): パッケージで読み込む必要のあるスタイルシートの順番を特定するための文字列。指定されていない場合は_stylesheets_ディレクトリにアルファベット順にスタイルシートを追加します。
++ ```keymaps``` (オプショナル): パッケージで読み込む必要のあるキーマップを特定するための文字列。指定されていない場合は_keymaps_ディレクトリにアルファベット順にマッピングを追加します。
++ ```menus``` (オプショナル): パッケージで読み込む必要のあるメニューを特定するための文字列。指定されていない場合は_menus_ディレクトリにアルファベット順にマッピングを追加します。
++ ```snippets``` (オプショナル): パッケージで読み込む必要のあるスニペットを特定するための文字列。指定されていない場合は_nippets_ディレクトリにアルファベット順にスニペットを追加します。
++ ```activationEvents``` (オプショナル): パッケージ有効化時にトリガーされるイベントを特定するための文字列。トリガーされるイベントに達するまでパッケージの読み込みを遅らせることができます。
 
 ### ソースコード
 
-If you want to extend Atom's behavior, your package should contain a single top-level module, which you export from index.coffee (or whichever file is indicated by the main key in your package.json file). The remainder of your code should be placed in the lib directory, and required from your top-level file.
+もしAtomの挙動を_index.conffee_からエクスポート（または_package.json_ファイルの```main```キーで指定されているファイル）できるよう拡張したいならパッケージを単一の上位レベルモジュールに含めなければならない。
 
-Your package's top-level module is a singleton object that manages the lifecycle of your extensions to Atom. Even if your package creates ten different views and appends them to different parts of the DOM, it's all managed from your top-level object.
+あなたの上位レベルモジュールパッケージはAtomの拡張ライフサイクルを管理するシングルトンオブジェクトです。たとえあなたのパッケージが１０種類の異なるビューそして異なるDOMパーツの追加を作成したとしてもそれらはすべて上位オブジェクトから管理されます。
 
-Your package's top-level module should implement the following methods:
+あなたの上位レベルモジュールパッケージは以下のように実装してください:
 
-activate(state): This required method is called when your package is activated. It is passed the state data from the last time the window was serialized if your module implements the serialize() method. Use this to do initialization work when your package is started (like setting up DOM elements or binding events).
++ ```activate(state)```: パッケージが有効になった時呼び出されることを要求するメソッド。もし```serialize()```メソッドを実行するモジュールならウインドウが最後にシリアライズされた状態のデータをパスします。
 
-serialize(): This optional method is called when the window is shutting down, allowing you to return JSON to represent the state of your component. When the window is later restored, the data you returned is passed to your module's activate method so you can restore your view to where the user left off.
++ ```serialize()```: ウインドウが閉じられた時に呼び出されるオプショナルメソッド。コンポーネントの状態をJSONにして返します。あとでウインドウを開いた時返されるデータは以前のビューの状態を再現するためモジュールの```activate```メソッドが実行されたものです。
 
-deactivate(): This optional method is called when the window is shutting down. If your package is watching any files or holding external resources in any other way, release them here. If you're just subscribing to things on window, you don't need to worry because that's getting torn down anyway.
++ deactivate(): ウインドウを閉じた時に呼び出されるオプショナルメソッド。もしパッケージがファイルや外部リソースを別の方法で保持しているのを監視しているならばそれらはここで開放します。単にウインドウになにか記述しているだけならそれはいずれ開放されるので心配する必要はありません。
 
 ### 簡単なパッケージコード
 
-Your directory would look like this:
+ディレクトリは以下のようになっています:
 ```
 my-package/
   package.json
@@ -264,18 +264,18 @@ my-package/
   lib/
     my-package.coffee
 ```
-```index.coffee``` might be:
-```javascript
+```index.coffee``` は:
+```coffeescript
 module.exports = require "./lib/my-package"
 ```
-```my-package/my-package.coffee``` might start:
-```javascript
+```my-package/my-package.coffee``` は以下のように始める:
+```coffeescript
 module.exports =
   activate: (state) -> # ...
   deactivate: -> # ...
   serialize: -> # ...
 ```
-Beyond this simple contract, your package has access to Atom's API. Be aware that since we are early in development, APIs are subject to change and we have not yet established clear boundaries between what is public and what is private. Also, please collaborate with us if you need an API that doesn't exist. Our goal is to build out Atom's API organically based on the needs of package authors like you.
+シンプルな規約を通じてあなたのパッケージはAtomのAPIにアクセスします。初期開発の段階なのでAPIが変わったりpublicとprivateの境界をはっきりとしていないことを念頭においていください。また、欲しいAPIがなければ我々と共同で作りましょう。あなたのようなパッケージ作成者のニーズを基板にしたAtomのAPIを作ることが我々のゴールです。
 
 ### スタイルシート
 
