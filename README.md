@@ -2,12 +2,14 @@ Atom入門
 =================
 
 # 目的
-GitHub製エディタAtomの操作方法を修得するため公式サイトのドキュメントページを超訳する  
-+ [はじめに](https://atom.io/docs/v0.84.0/getting-started)  
-+ [カスタマイズ](https://atom.io/docs/v0.84.0/customizing-atom)  
-+ [パッケージの作成](https://atom.io/docs/v0.84.0/creating-a-package)  
-+ [テーマ作成](https://atom.io/docs/v0.84.0/creating-a-theme)  
-+ [パッケージの公開](https://atom.io/docs/v0.84.0/publishing-a-package)  
+GitHub製エディタAtomの操作方法を修得するため公式サイトの[ドキュメントページ](https://atom.io/docs/latest/)を超訳する  
++ Guides
+  + [Getting Started](https://atom.io/docs/v0.84.0/getting-started)  
+  + [Customizing Atom](https://atom.io/docs/v0.84.0/customizing-atom)  
+  + [Creating a Package](https://atom.io/docs/v0.84.0/creating-a-package)  
+  + [Creating a Theme](https://atom.io/docs/v0.84.0/creating-a-theme)  
+  + [Publishing a Package](https://atom.io/docs/v0.84.0/publishing-a-package)  
+  + [Contributing](https://atom.io/docs/v0.84.0/contributing)
 
 # 前提
 | ソフトウェア     | バージョン    | 備考         |
@@ -16,11 +18,13 @@ GitHub製エディタAtomの操作方法を修得するため公式サイトの�
 | Atom           |0.84.0        |             |
 
 # 構成
-+ [はじめに](#1)
-+ [カスタマイズ](#2)
-+ [パッケージ作成](#3)
-+ [テーマ作成](#4)
-+ [パッケージ公開](#5)
++ ガイド
+  + [はじめに](#1)
+  + [カスタマイズ](#2)
+  + [パッケージ作成](#3)
+  + [テーマ作成](#4)
+  + [パッケージ公開](#5)
+  + [貢献](#6)
 
 # 詳細
 ## <a name="1">はじめに</a>
@@ -279,35 +283,35 @@ module.exports =
 
 ### スタイルシート
 
-Stylesheets for your package should be placed in the stylesheets directory. Any stylesheets in this directory will be loaded and attached to the DOM when your package is activated. Stylesheets can be written as CSS or LESS.
+あなたのパッケージ用のスタイルシートは_stylesheets_ディレクトリに配置してください。ディレクトリに配置されたスタイルシートはパッケージが有効化された時点で読み込まれDOMにアタッチされます。スタイルシートはCSSまたは[LESS](http://lesscss.org/)で記述できます。
 
-Ideally, you won't need much in the way of styling. We've provided a standard set of components which define both the colors and UI elements for any package that fits into Atom seamlessly. You can view all of Atom's UI components by opening the styleguide: open the command palette (cmd-shift-P) and search for styleguide, or just type cmd-ctrl-shift-G.
+理想的にはあなたはスタイリングの方法を知る必要はない。我々はAtomとシームレスにフィットするパッケージ用の色とUI要素を定義した標準コンポーネントセットを提供しています。コマンドパレット(```cmd-shift-P```)を開いて_styleguide_を検索するまたは```cmd-ctrl-shift-G```を押してスタイルガイドを開けば全てのAtomUIコンポーネントを見ることができます。
 
-If you do need special styling, try to keep only structural styles in the package stylesheets. If you must specify colors and sizing, these should be taken from the active theme's ui-variables.less. For more information, see the theme variables docs. If you follow this guideline, your package will look good out of the box with any theme!
+特定のスタイリングが必要なら、スタイルシートパッケージ内の構造スタイルのみで続けてください。もし、色とサイズを詳細化しなければならないなら既に有効なテーマである[ui-variables.less](https://github.com/atom/atom-dark-ui/blob/master/stylesheets/ui-variables.less)を使ってください。詳細は[theme variables docs](https://atom.io/docs/v0.84.0/theme-variables)を見てください。もしこのガイドラインに従ったならあなたのパッケージはすぐに使える良いテーマとなるでしょう。
 
-An optional stylesheets array in your package.json can list the stylesheets by name to specify a loading order; otherwise, stylesheets are loaded alphabetically.
+_package.json_ファイル内のオプショナル```stylesheets```文字列は読み込み時スタイルシートを名前順に並べる順番を特定します、それがなければアルファベット順にスタイルシートを読み込みます。
 
 ### キーマップ
 
-It's recommended that you provide key bindings for commonly used actions for your extension, especially if you're also adding a new command:
-```
+個別拡張を使ってキーバインディングを共通化することを推奨します、特に既に新しいコマンドを追加しているなら:
+```cson
 '.tree-view-scroller':
   'ctrl-V': 'changer:magic'
 ```
-Keymaps are placed in the keymaps subdirectory. By default, all keymaps are loaded in alphabetical order. An optional keymaps array in your package.json can specify which keymaps to load and in what order.
+キーマップは_keymaps_サブディレクトリに配置されています。デフォルトではキーマップは全てアルファベット順に読み込まれます。_package.json_ファイル内のオプショナル```keymas```文字列は読み込むキーマップと順番を特定することができます。
 
-Keybindings are executed by determining which element the keypress occurred on. In the example above, changer:magic command is executed when pressing ctrl-V on the .tree-view-scroller element.
+キーバインディングはどのキー要素が押されたを特定することで実行されます。上記の例では```changer:magic```コマンドは```.tree-view-scroller```要素上で```ctrl-V```を押した時に実行されます。
 
-See the main keymaps documentation for more detailed information on how keymaps work.
+キーマップがどのように動くかの詳細は[main keymaps documentation](https://atom.io/docs/v0.84.0/advanced/keymaps)を参照してください。
 
 ### メニュー
 
-Menus are placed in the menus subdirectory. By default, all menus are loaded in alphabetical order. An optional menus array in your package.json can specify which menus to load and in what order.
+メニューは_menus_サブディレクトリに配置されています。デフォルトでは全てのメニューはアルファベット順に読み込まれます。_package.json_ファイル内のオプショナル```menus```文字列は読み込むメニューと順番を特定することができます。
 
 #### アプリケーションメニュー
 
-It's recommended that you create an application menu item for common actions with your package that aren't tied to a specific element:
-```
+パッケージで共通動作を特定の要素に固定化されないようなアプリケーションメニューを作ることを推奨します。
+```json
 'menu': [
   {
     'label': 'Packages'
@@ -325,29 +329,29 @@ It's recommended that you create an application menu item for common actions wit
   }
 ]
 ```
-To add your own item to the application menu, simply create a top level menu key in any menu configuration file in menus. This can be a JSON or CSON file.
+あなただけのアプリケーションメニューを追加するには単純に_menus_内の設定ファイルの一番上に```menu```キーを追加するだけです。これはJSONまた[CSON](https://github.com/atom/season)ファイルが使えます。
 
-The menu templates you specify are merged with all other templates provided by other packages in the order which they were loaded.
+あなたが設定したテンプレートはその他のパッケージと読み込まれた順番にマージされます。
 
 #### コンテクストメニュー
 
-It's recommended to specify a context menu item for commands that are linked to specific parts of the interface, like adding a file in the tree-view:
-```
+ツリービューにファイルを追加例のようにインターフェースの特定部分にリンクするコマンドをコンテクストメニューで明確化することを推奨する。
+```JSON
 'context-menu':
   '.tree-view':
     'Add file': 'tree-view:add-file'
   '.workspace':
     'Inspect Element': 'core:inspect'
 ```
-To add your own item to the application menu simply create a top level context-menu key in any menu configuration file in menus. This can be a JSON or CSON file.
+あなただけのアプリケーションメニューを追加するには単純に_menus_内の設定ファイルの一番上に```context-menu```キーを追加するだけです。これはJSONまた[CSON](https://github.com/atom/season)ファイルが使えます。
 
-Context menus are created by determining which element was selected and then adding all of the menu items whose selectors match that element (in the order which they were loaded). The process is then repeated for the elements until reaching the top of the DOM tree.
+コンテクストメニューは選択された要素とセレクターにマッチした要素のメニューアイテム全てを判定して作成します（読み込まれた順番に）。このプロセスはDOMツリーの先頭要素に達するまで繰り返されます。
 
-In the example above, the Add file item will only appear when the focused item or one of its parents has the tree-view class applied to it.
+上記の例では```Add file```アイテムはフォーカスされたアイテムまたは```tree-view```クラスが適用された親アイテムにのみ適用されます。
 
 ### スニペット
 
-An extension can supply language snippets in the snippets directory which allows the user to enter repetitive text quickly:
+_snippets_ディレクトリには繰り返し入力するテキストを早く入力するための言語スニペットを配置することができます。
 ```
 ".source.coffee .specs":
   "Expect":
@@ -360,9 +364,9 @@ An extension can supply language snippets in the snippets directory which allows
         ${2:body}
     """
 ```
-A snippets file contains scope selectors at its top level (.source.coffee .spec). Each scope selector contains a hash of snippets keyed by their name (Expect, Describe). Each snippet also specifies a prefix and a body key. The prefix represents the first few letters to type before hitting the tab key to autocomplete. The body defines the autofilled text. You can use placeholders like $1, $2, to indicate regions in the body the user can navigate to every time they hit tab.
+スニペットファイルには最上位(```.source.coffee .spec```)にスコープセレクタを含んでいます。それぞれのスコープセレクタはそれぞれの名前(```Expect``` ,```Describe```)をキーとしたハッシュを含んでいます。それぞれのスニペットは```prefix```と```body```キーで特定される。```prefix```は```tab```キーを押してオートコンプリートする前に表示される最初の文字を表しています。```body```は自動入力されるテキストです。```$1```,```$2```,のようなプレースホルダを使って自動入力されたテキスト内で```tab```を押して移動するようにできます。
 
-All files in the directory are automatically loaded, unless the package.json supplies a snippets key. As with all scoped items, snippets loaded later take precedence over earlier snippets when two snippets match a scope with the same specificity.
+ディレクトリ内のすべてのファイルは_package.json_がスニペットキーを提供していない限り自動的に読み込まれます。スコープアイテム同様、同じ項目のスコープにマッチする２つのスニペットがある場合は後に読み込んだスニペットが上書きします。
 
 ### 文法
 
@@ -434,6 +438,8 @@ Run apm help publish to see all the available options and apm help to see all th
 ## <a name="4">テーマ作成</a>
 
 ## <a name="5">パッケージ公開</a>
+
+## <a name="6">貢献</a>
 
 # 参照
 [Atom](https://atom.io/)  
