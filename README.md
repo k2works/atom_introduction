@@ -370,9 +370,9 @@ _snippets_ディレクトリには繰り返し入力するテキストを早く�
 
 ### 文法
 
-If you're developing a new language grammar, you'll want to place your file in the grammars directory. Each grammar is a pairing of two keys, match and captures. match is a regular expression identifying the pattern to highlight, while captures is an object representing what to do with each matching group.
+もし、新しい言語の文法を開発しているならファイルを_grammars_ディレクトリに配置したいと思うでしょう。それぞれの文法は```match```と```captures```の２つのキーで構成されています。```match```は強調したいパターンを認識するための正規表現です。一方、```captures```はそれぞれのマッチングするグループで何をするかを表すオブジェクトです。
 
-For example:
+例:
 ```
 {
   'match': '(?:^|\\s)(__[^_]+__)'
@@ -380,20 +380,20 @@ For example:
     '1': 'name': 'markup.bold.gfm'
 }
 ```
-This indicates that the first matching capture ((__[^_]+__)) should have the markup.bold.gfm token applied to it.
+これは```((__[^_]+__))```にマッチしたものはそれに適用されるトークン```markup.bold.gfm```を持っていることを意味します。
 
-To capture a single group, simply use the name key instead:
+シングルグループを取得するにはシンプルに```name```キーを代用するだけ:
 ```
 {
   'match': '^#{1,6}\\s+.+$'
   'name': 'markup.heading.gfm'
 }
 ```
-This indicates that Markdown header lines (#, ##, ###) should be applied with the markup.heading.gfm token.
+これはマークダウンのヘッダー行(```#```,```##```,```###```)が```markup.heading.gfm```トークンで適用されることを指しています。
 
-More information about the significance of these tokens can be found in section 12.4 of the TextMate Manual.
+これらトークンの意味に関しては[section 12.4 of the TextMate Manual](http://manual.macromates.com/en/language_grammars.html)にさらなる情報があります。
 
-Your grammar should also include a filetypes array, which is a list of file extensions your grammar supports:
+また、あなたの文法は拡張サポートファイル一覧を表す```filetypes```文字列を含めることができる。
 ```
 'fileTypes': [
   'markdown'
@@ -405,36 +405,37 @@ Your grammar should also include a filetypes array, which is a list of file exte
 ```
 ### 外部リソース
 
-It's common to ship external resources like images and fonts in the package, to make it easy to reference the resources in HTML or CSS, you can use the atom protocol URLs to load resources in the package.
+パッケージ内のイメージやフォントといった外部リソースを出すのもの共通です。HTMLやCSS内のリソースを参照するのを簡単にするのにパッケージ内の```atom```プロトコルURLsを使うことができます。
 
-The URLs should be in the format of atom://package-name/relative-path-to-package-of-resource, for example, the atom://image-view/images/transparent-background.gif would be equivalent to ~/.atom/packages/image-view/images/transparent-background.gif.
+URLsのフォーマットは```atom://package-name/relative-path-to-package-of-resource```, 例えば, ```atom://image-view/images/transparent-background.gif```は ```~/.atom/packages/image-view/images/transparent-background.gif```と等価です。
 
-You can also use the atom protocol URLs in themes.
+またテーマの中でも```atom```プロトコルは使えます。
 
 ### テスト作成
 
-Your package should have tests, and if they're placed in the spec directory, they can be run by Atom.
+パッケージにはテストがなければならない、そしてそれらは_spec_ディレクトリに配置されている。テストはAtomで実行できる。
 
-Under the hood, Jasmine executes your tests, so you can assume that any DSL available there is also available to your package.
+実際には[Jasmin](http://jasmine.github.io/)がテストを実行します。なのでパッケージ内で有効なDSLを扱うとができる。
 
 ### テスト実行
 
-Once you've got your test suite written, you can run it by pressing cmd-alt-ctrl-p or via the Developer > Run Package Specs menu.
+テストスイートを書いたら、```cmd-alt-ctrl-p```を押す,
+または_Developer > Run Package Specs_メニューからテストを実行させることができます。
 
-You can also use the apm test command to run them from the command line. It prints the test output and results to the console and returns the proper status code depending on whether the tests passed or failed.
+またコマンドラインから```apm test```コマンドを実行してテストをすることもできます。テスト出力と結果がコンソールに出力されテストが成功したか失敗したかの詳細コードを返します。
 
 ### 公開
 
-Atom bundles a command line utility called apm which can be used to publish Atom packages to the public registry.
+AtomにはapmというAtomパッケージを公開するために使うコマンドラインユーティリティがバンドルされています。
 
-Once your package is written and ready for distribution you can run the following to publish your package:
+パッケージを作成して配布する準備ができたら以下の操作でパッケージを公開できます。
 ```
 cd my-package
 apm publish minor
 ```
-This will update your package.json to have a new minor version, commit the change, create a new Git tag, and then upload the package to the registry.
+これは```package.json```を新しいマイナー```version```にアップデートします。変更をコミットして新しい[Git tag](http://git-scm.com/book/en/Git-Basics-Tagging)をつけてパッケージをアップロード登録してください。
 
-Run apm help publish to see all the available options and apm help to see all the other available commands.
+```amp help publish```を実行すれば有効なオプションを確認できます。そして、```apm help```でその他の有効なコマンドを確認できます。
 ## <a name="4">テーマ作成</a>
 
 ## <a name="5">パッケージ公開</a>
