@@ -438,87 +438,93 @@ apm publish minor
 ```amp help publish```を実行すれば有効なオプションを確認できます。そして、```apm help```でその他の有効なコマンドを確認できます。
 
 ## <a name="4">テーマ作成</a>
-Atom's interface is rendered using HTML, and it's styled via LESS. Don't worry if you haven't heard of LESS before; it's just like CSS, but with a few handy extensions.
 
-Atom supports two types of themes: UI and syntax. UI themes style elements such as the tree view, the tabs, drop-down lists, and the status bar. Syntax themes style the code inside the editor.
+AtomのインターフェースはHTMLで描画され[LESS](http://lesscss.org)を経由して整形されます。LESSを知らなくてくても心配しないでください、CSSみたいなものです、しかしいくつかの拡張があります。
 
-Themes can be installed and changed from the settings view which you can open by selecting the Atom > Preferences... menu and navigating to the Themes section on the left hand side.
+Atomは２種類のテーマをサポートしています:UIとシンタックスです。UIテーマはツリービュー、タブ、ドロップダウンリストそしてステータスバーなどの要素を整形します。シンタックステーマはエディタ内のコードを整形します。
+
+_Atom > Preference..._メニューを選択制して表示される画面左側の_Themes_セクションの設定画面からテーマのインストールと変更ができます。
 
 ### はじめに
 
-Themes are pretty straightforward but it's still helpful to be familiar with a few things before starting:
+テーマはとてもわかり易いのですが始める前にいくつかのことに親しんでおけば助けになります:
 
-+ LESS is a superset of CSS, but it has some really handy features like variables. If you aren't familiar with its syntax, take a few minutes to familiarize yourself.
-+ You may also want to review the concept of a package.json, too. This file is used to help distribute your theme to Atom users.
-+ Your theme's package.json must contain a "theme" key with a value of "ui" or "syntax" for Atom to recognize and load it as a theme.
-+ You can find existing themes to install or fork on atom.io.
++ LESSはCSSをサポートします、それ以外に変数など便利な機能があります。もしシンタックスに親しみたいなら[ここ](https://speakerdeck.com/danmatthews/less-css)でしばし時間を使ってください。
++ 同様に_[package.json](https://atom.io/docs/v0.85.0/creating-a-package)_のコンセプトも復習したいでしょう。このファイルはあなたのテーマをAtomユーザーに配布することを手助けするために使われます。
++ あなたのテーマである_package.json_にはAtomにテーマとして認識させて読み込むための```"theme"```キーと```"ui"```または```"syntax"```バリューを含めなければならない。
++ 存在するテーマをインストールとしたり[atom.io](https://atom.io)からフォークできます。
 
 ### シンタックステーマ作成
 
 Let's create your first theme.
+あなたの最初のテーマを作ってみましょう。
 
-To get started, hit cmd-shift-P, and start typing "Generate Syntax Theme" to generate a new theme package. Select "Generate Syntax Theme," and you'll be asked for the path where your theme will be created. Let's call ours motif-syntax. Tip: syntax themes should end with -syntax.
+始めるにあたって、```cmd-shift-P```を押して新しいテーマパッケージを作るために"Generate Sytax Theme"と入力してください。"Generate Syntax Theme"と選択するとテーマを作成する場所になるパスを質問されます。我々の_motif-syntax_を呼び出してみましょう。**Tip:**シンタックステーマは_-syntax_で終わります。
 
-Atom will pop open a new window, showing the motif-syntax theme, with a default set of folders and files created for us. If you open the settings view (cmd-,) and navigate to the Themes section on the left, you'll see the Motif theme listed in the Syntax Theme drop-down. Select it from the menu to activate it, now when you open an editor you should see that your new motif-syntax theme in action.
+Atomは作成用のフォルダとファイルのデフォルトセットを新しいウインドウを表示します、_motif-syntax_テーマが表示されているでしょう。もし設定ビューを開いて(```cmd-,```)左側のテーマセクションを選択したなら_Syntax　Theme_ドロップダウンリストの中に_Motif_テーマを見つけることができるでしょう。それを選択して有効化してください、そうすればエディタを開いた時に新しい_motif-syntax_が確認できます。
 
-Open up stylesheets/colors.less to change the various colors variables which have been already been defined. For example, turn @red into #f4c2c1.
+_stylesheets/colors.less_を開いて既に定義されている色項目を編集してください。例えば```@red```を```#f4c2c1```に変更する。
 
-Then open stylesheets/base.less and modify the various selectors that have been already been defined. These selectors style different parts of code in the editor such as comments, strings and the line numbers in the gutter.
+_stylesheets/base.less_を開いて既に定義されているセレクター項目を編集してください。これらセレクタはコメント、文字列そして画面左の行番号など複数のコードで整形されます。
 
-As an example, let's make the .gutter background-color into @red.
+例として、```.gutter``` ```background-color```を```@red```に変えてみましょう
 
-Reload Atom by pressing cmd-alt-ctrl-l to see the changes you made reflected in your Atom window. Pretty neat!
+Atomウインドウ内で変更が反映されたか確認するため```cmd-alt-ctrl-l```を押してAtomをリロードしてしください。すごくいいね！
 
-Tip: You can avoid reloading to see changes you make by opening an atom window in dev mode. To open a Dev Mode Atom window run atom --dev . in the terminal, use cmd-shift-o or use the View > Developer > Open in Dev Mode menu. When you edit your theme, changes will instantly be reflected!
+**Tip:**開発モードでatomウインドウを開いて変更を確認するリロード操作を回避することができます。開発モードでAtomウインドウを開いてターミナルから```atom --dev .```を```cmd-shift-o```を使って実行してくださいまたは開発モードメニューの_View > Developer > Open in Dev Mode_を使って。あたなテーマを編集した時に変更がすぐに反映されます！
 
 ### インターフェーステーマ作成
 
-Interface themes must provide a ui-variables.less file which contains all of the variables provided by the core themes.
+インターフェーステーマは[core themes](https://atom.io/docs/v0.85.0/theme-variables)で提供される変数をすべて含んできいる```ui-variables.less```ファイルで提供しなければならい。
 
-To create an interface UI theme, do the following:
+インターフェースUIテーマを作るには以下の手順:
 
 1. Fork one of the following repositories:
-  + atom-dark-ui
-  + atom-light-ui
-1. Clone the forked repository to the local filesystem
-1. Open a terminal in the forked theme's directory
-1. Open your new theme in a Dev Mode Atom window run atom --dev . in the terminal or use the View > Developer > Open in Dev Mode menu
-1. Change the name of the theme in the theme's package.json file
+1. 以下のレポジトリをフォークする:  
+  + [atom-dark-ui](https://github.com/atom/atom-dark-ui)
+  + [atom-light-ui](https://github.com/atom/atom-light-ui)
+1. ローカルにフォークしたレポジトリをクローンする
+1. フォークしたテーマのディレクトリをターミナルで開く
+1. ターミナルから```atom --dev .```を実行して開発モードで新しいテーマを開くまたは_View > Developer > Open in Dev Mode_メニューを使う。
+1. テーマ内の```package.json```ファイルのテーマ名を変える
 1. Name your theme end with a -ui. i.e. super-white-ui
-1. Run apm link to symlink your repository to ~/.atom/packages
-1. Reload Atom using cmd-alt-ctrl-L
-1. Enable the theme via UI Theme drop-down in the Themes section of the settings view
-1. Make changes! Since you opened the theme in a Dev Mode window, changes will be instantly reflected in the editor without having to reload.
+1. 最後を```-ui```にして名前をつける。すなわち```super-white-ui```
+1. ```apm link```を実行して```~/.atom/packages```へレポジトリのシンボルリンクをはる
+1. ```cmd-alt-ctrl-L```を使ってAtomをリロードする
+1. 設定ビューの_Themes section_内の_UI Theme_ドロップダウンリストからテーマを有効化する
+1. 完了！開発モードでテーマを開いているなら、変更はリロードしなくてもすぐに反映される
 
 ### 開発フロー
 
-There are a few of tools to help make theme development faster and easier.
+テーマ開発を早く簡単に手助けをするツールがいくつかあります。
 
 #### ライブリロード
 
-Reloading by hitting cmd-alt-ctrl-L after you make changes to your theme is less than ideal. Atom supports live updating of styles on Dev Mode Atom windows.
+いちいちテーマを変更した後に```cmd-alt-ctrl-L```を押すのは理想的ではない。Atomは開発モードウインドウでの[live updating](https://github.com/atom/dev-live-reload)をサポートしている。
 
-To enable a Dev Mode window:
+開発モードウインドウを有効にするには:
 
-1. Open your theme directory in a dev window by either going to the View > Developer > Open in Dev Mode menu or by hitting the cmd-shift-o shortcut
+1. **_View > Developer > Open in Dev Mode_**メニューまたは```cmd-shift-o```ショートカットから開発ウインドウのテーマディレクトリを開く。
 1. Make a change to your theme file and save it. Your change should be immediately applied!
-If you'd like to reload all the styles at any time, you can use the shortcut cmd-ctrl-shift-r.
+1. テーマを変更して保存する。変更はすぐに適用される！
+
+もし全てのテーマをいつでもリロードしたいなら```cmd-ctrl-shift-r```ショートカットが使えます。
 
 #### 開発ツール
 
-Atom is based on the Chrome browser, and supports Chrome's Developer Tools. You can open them by selecting the View > Toggle Developer Tools menu, or by using the cmd-alt-i shortcut.
+AtomはChrome browserをベースにしています。そしてChrome's Developer Toolsをサポートしている。_View > Toggle Developer Tools_メニューまたは```cmd-alt-i```ショートカットから開発画面を開くことができます。
 
-The dev tools allow you to inspect elements and take a look at their CSS properties.
+開発ツールは要素を詳細に確認できCSSプロパティを見ることができるようにしてくれます。
 
-devtools-img
+![devtools-img](https://f.cloud.github.com/assets/69169/1347391/2d51f91c-36af-11e3-806f-f7b334af43e9.png)
 
-Check out Google's extensive tutorial for a short introduction.
+短い解説がグーグルの[拡張ガイド](https://developers.google.com/chrome-developer-tools/docs/elements)にあります。
 
 #### Atomスタイルガイド
 
-If you are creating an interface theme, you'll want a way to see how your theme changes affect all the components in the system. The styleguide is a page that renders every component Atom supports.
+もしインターフェステーマを作っているなら、作成したテーマがシステム内のコンポーネントをどのように変更したかを確認する方法を知りたいと思うだろう。[styleguide](https://github.com/atom/styleguide)はAtomがサポートする全てのコンポーネントを描画するページです。
 
-To open the styleguide, open the command palette (cmd-shift-P) and search for styleguide, or use the shortcut cmd-ctrl-shift-g.
+styleguideを開くには、コマンドパレットを開き(```cmd-shift-P```)_styleguide_を検索するか```cmd-ctrl-shift-g```ショートカットを使ってください。
 
 ![](https://f.cloud.github.com/assets/69169/1347390/2d431d98-36af-11e3-8f8e-3f4ce1e67adb.png)
 ## <a name="5">パッケージ公開</a>
