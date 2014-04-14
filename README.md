@@ -529,65 +529,67 @@ styleguideを開くには、コマンドパレットを開き(```cmd-shift-P```)
 ![](https://f.cloud.github.com/assets/69169/1347390/2d431d98-36af-11e3-8f8e-3f4ce1e67adb.png)
 ## <a name="5">パッケージ公開</a>
 
-This guide will show you how to publish a package or theme to the atom.io package registry.
+このガイドはパッケージやテーマを[atom.io](https://atom.io/)の登録パッケージに公開する方法を説明します。
 
-Publishing a package allows other people to install it and use it in Atom. It is a great way to share what you've made and get feedback and contributions from others.
+パッケージを公開することで他の人もAtomにインストールして使うことができるようになります。あなたが作ったものを共有しフィードバックを得て他の人に貢献することは素晴らしいことです。
 
-This guide assumes your package's name is my-package and but you should pick a better name.
+このガイドではあなたのパッケージ名を```my-package```と仮定していますがもっといい名前をつけることができます。
 
 ### apmインストール
 
-The apm command line utility that ships with Atom supports publishing packages to the atom.io registry.
+Atomに同梱されている```apm```コマンドラインユーティリティはatom.io登録パッケージに公開する手助けをしてくれます。
 
-Check that you have apm installed by running the following command in your terminal:
+ターミナルから以下のコマンドを実行して```apm```がインストールされているかを確認して下さい:
 
 ```
 apm help publish
 ```
-You should see a message print out with details about the apm publish command.
+```apm publish```コマンドの詳細を確認することができます。
 
-If you do not, launch Atom and run the Atom > Install Shell Commmands menu to install the apm and atom commands.
+もし動作しないのであればAtomを起動して_Atom > Install Shell Commmands_メニューから```apm```と```atom```コマンドをインストールしてください。
 
 ### パッケージを準備
 
-If you've followed the steps in the your first package doc then you should be ready to publish and you can skip to the next step.
+もし[your first package](https://atom.io/docs/v0.85.0/your-first-package)を済ませているならもう公開の準備はできているので次のステップは省略することができます。
 
 If not, there are a few things you should check before publishing:
+もしそうでなければ公開前にいくつかチェックする項目があります:
 
-Your package.json file has name, description, and repository fields.
-Your package.json file has a version field with a value of "0.0.0".
-Your package.json file has an engines field that contains an entry for Atom such as: "engines": {"atom": ">=0.50.0"}.
-Your package has a README.md file at the root.
-Your package is in a Git repository that has been pushed to GitHub. Follow this guide if your package isn't already on GitHub.
++ _package.json_ファイルは```name```,```description```そして```repository```フィールドを持っています
++ _package.json_ファイルは```"0.0.0"の値をもつ```version```フィールドを持っています
++ _package.json_ファイルは```"eingines":{"atom":>=0.50.0"}```のような形でAtomに含まれている```engines```フィールドを持っています
++ パッケージはルートに```README.md```ファイルを持っています
++ Gitレポジトリ内のパッケージは[GitHub](https://github.com/)にプッシュされます。まだパッケージをGitHubに登録していないなら[このガイド](https://guides.github.com/overviews/desktop/)に従ってください。
 
 ### パッケージを公開
 
-Before you publish a package it is a good idea to check ahead of time if a package with the same name has already been published to atom.io. You can do that by visiting http://atom.io/packages/my-package to see if the package already exists. If it does, update your package's name to something that is available before proceeding.
+パッケージを公開する前にすでに同じ名前のパッケージがatom.ioの公開されていないかチェックする時間を取るのは良い考えです。```http://atom.io/packages/my-package```を訪れてパッケージが既に存在するか確認することができます。
 
-Now let's review what the apm publish command does:
+さあ、```apm publish```コマンドがすることを復習しましょう:
 
-Registers the package name on atom.io if it is being published for the first time.
-Updates the version field in the package.json file and commits it.
-Creates a new Git tag for the version being published.
-Pushes the tag and current branch up to GitHub.
-Updates atom.io with the new version being published.
-Now run the following commands to publish your package:
+1. 初めての公開ならばatom.ioにパッケージ名を登録する
+1. _package.json_ファイルの```version```フィールドを更新してコミットする
+1. 公開されるバージョンの[Gitタグ](http://git-scm.com/book/en/Git-Basics-Tagging)を作る
+1. タグと現在のブランチをGitHubにプッシュする
+1. 公開されたバージョンでatom.ioを更新する
+
+さあ、以下のコマンドを実行してパッケージを公開しましょう:
 
 ```
 cd ~/github/my-package
 apm publish minor
 ```
-If this is the first package you are publishing, the apm publish command may prompt you for your GitHub username and password. This is required to publish and you only need to enter this information the first time you publish. The credentials are stored securely in your keychain once you login.
+もしこれが最初の公開パッケージなら、```apm publish```コマンドはあなたのGitHubユーザー名とパスワードを確認してきます。これは公開する上で必須ですそして公開する最初の１回だけ入力する必要があります。いちどログインすれば証明は安全にあなたの[keychain](http://en.wikipedia.org/wiki/Keychain_(Apple))に保存されます。
 
-:tada: Your package is now published and available on atom.io. Head on over to http://atom.io/packages/my-package to see your package's page.
+:tada: あなたのパッケージは公開されatom.io内で使うことができるようになりました。```http://atom.io/packages/my-package```にアクセスすればあなたのパッケージページが確認できるはずです。
 
-The minor option to the publish command tells apm to increment the second digit of the version before publishing so the published version will be 0.1.0 and the Git tag created will be v0.1.0.
+公開コマンドの```minor```オプションは公開前にバージョンの２番めの番号を加算します。なので公開されるバージョンは```0.1.0```となり```v0.1.0```のGitタグが作られるでしょう。
 
-In the future you can run apm publish major to publish the 1.0.0 version but since this was the first version being published it is a good idead to start with a minor release.
+将来あなたは```1.0.0```バージョンを公開するため```apm publish major```コマンドを実行するでしょう。しかし、すでに最初のバージョンを公開しているのだからマイナーリリースから始めるのは良い考えでしょう。
 
 ### さらに詳しく
 
-Check out semantic versioning to learn more about versioning your package releases.
+パッケージリリースのバージョンに関してもっと学びたいのであれば[semantic versioning](http://semver.org/)を参照してください。
 
 ## <a name="6">貢献</a>
 
