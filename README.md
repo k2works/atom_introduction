@@ -592,96 +592,100 @@ apm publish minor
 パッケージリリースのバージョンに関してもっと学びたいのであれば[semantic versioning](http://semver.org/)を参照してください。
 
 ## <a name="6">貢献</a>
-The following is a set of guidelines for contributing to Atom packages, which are hosted in the Atom Organization on GitHub. If you're unsure which package is causing your problem or if you're having an issue with Atom core, please use the feedback form in the application or email atom@github.com.
+以下はAtomパッケージへ貢献するためのGitHub上にホストされている[Atom Organization](https://github.com/atom)ガイドラインです。もし、パッケージの問題がはっきりしないまたはAtom coreの部分に問題があればアプリケーションかEメール[atom@github.com](mailto:atom@github.com)までフィードバックお願いします。
 
 ### イシューをあげる
 
-+ Include screenshots and animated GIFs whenever possible; they are immensely helpful.
-+ Include the behavior you expected and other places you've seen that behavior such as Emacs, vi, Xcode, etc.
-+ Check the dev tools (alt-cmd-i) for errors and stack traces to include.
-+ Check Console.app for stack traces to include if reporting a crash.
-+ Perform a cursory search to see if a similar issue has already been submitted.
++ スクリーンショットかアニメーションGIFファイルをいれる:とても助かる
++ 期待していた振る舞いそしてEmacs,vi,Xcodeなどで他の同様の振る舞い
++ 開発ツール(```alt-cmd-i```)でチェックしたエラーとスタックトレース
++ もしレポートがクラッシュしているならばConsole.appのスタックトレース
++ 同様の問題がすでに出されていないかさっと調べる
 
 ### パッケージをハッキングする
 
 #### クローン
 
-The first step is creating your own clone. You can of course do this manually with git, or you can use the apm develop command to create a clone based on the package's repository field in the package.json.
+最初のステップは自分のクローンを作ることです。gitを使ってサクっとできます。または```apm develop```コマンドを使って```package.json```の```repository```フィールドのパッケージを元にクローンを作ることができます。
 
-For example, if you want to make changes to the tree-view package, run the following command:
+例えば、もし```tree-view```パッケージを変更したいのならば以下のコマンドを実行する:
 ```
 > apm develop tree-view
 Cloning https://github.com/atom/tree-view ✓
 Installing modules ✓
 ~/.atom/dev/packages/tree-view -> ~/github/tree-view
 ```
-This clones the tree-view repository to ~/github. If you prefer a different path, specify it via the ATOM_REPOS_HOME environment variable.
+```tree-view``` は ```~/github```に複製されます。もし他の場所に保存したいなら環境変数```ATOM_REPOS_HOME```で特定してください。
 
 #### 開発モード実行
 
-Editing a package in Atom is a bit of a circular experience: you're using Atom to modify itself. What happens if you temporarily break something? You don't want the version of Atom you're using to edit to become useless in the process. For this reason, you'll only want to load packages in development mode while you are working on them. You'll perform your editing in stable mode, only switching to development mode to test your changes.
+Atom内のパッケージを編集するのは経験の一環です:Atomを使ってAtomをカスタマイズします。もしなにか壊したら何が起こるでしょうか？途中で使い物にならなくなるようなバージョンのAtomを使いたくないでしょう。そんなわけで作業中は**開発モード**のパッケージだけを読み込みたいでしょう。通常は**安定モード**で編集して変更をテストしたい時だけ切り替えることができます。
 
-To open a development mode window, use the "Application: Open Dev" command, which is normally bound to cmd-shift-o. You can also run dev mode from the command line with atom --dev.
+開発モードウインドウを開くには通常は```cmd-shift-o```に関連付けられている"Application: Open Dev"コマンドを使う。またコマンドラインから```atom--dev```を使って開発モードを開くこともできます。
 
-To load your package in development mode, create a symlink to it in ~/.atom/dev/packages. This occurs automatically when you clone the package with apm develop. You can also run apm link --dev and apm unlink --dev from the package directory to create and remove dev-mode symlinks.
+開発モードでパッケージを読み込むには、```~/.atom/dev/packages```へのシンボルリンクを作ってください。これは```apm develop```でパッケージを複製した時に自動的に実行されます。また、複製したパッケージディレクトリから```apm link --dev```と```apm unlink --dev```を実行することでシンボルリンクを作ったり削除したりできます。
 
 #### 依存関係
 
-Finally, you need to install the cloned package's dependencies by running apm install within the package directory. This step is also performed automatically the first time you run apm develop, but you'll want to keep dependencies up to date by running apm update after pulling upstream changes.
+最後に、パッケージディレクトリ内で```apm install```を実行してパッケージ依存をインストールする必要があります。このステップは```apm develop```を最初に実行した時自動的に実行されます。しかし、アップストリームの変更をプルした後は```apm update```を実行して依存関係を最新にアップデートし続けたいでしょう。
 
 ### プルリクエストを送る
 
 #### コードガイドライン
 
-+ Include screenshots and animated GIFs in your pull request whenever possible.
-+ Follow the CoffeeScript, JavaScript, and CSS styleguides.
-+ Include thoughtfully-worded, well-structured Jasmine specs.
-+ Document new code based on the Documentation Styleguide
-+ End files with a newline.
-+ Place requires in the following order:
-  + Built in Node Modules (such as path)
-  + Built in Atom and Atom Shell Modules (such as atom, shell)
-  + Local Modules (using relative paths)
-+ Place class properties in the following order:
-  + Class methods and properties (methods starting with a @)
-  + Instance methods and properties
++ スクリーンショットとアニメーションGIFは可能な限りいつでもプルリクエストに含める
++ [CoffeeScript](https://atom.io/docs/v0.85.0/contributing#coffeescript-styleguide), [JavaScript](https://github.com/styleguide/javascript)、そして[CSS](https://github.com/styleguide/css)のスタイルガイドに従ってください
++ よく考えられ、しっかり構造化されてた[Jasmine](http://jasmine.github.io/)スペックを含める
++ [ドキュメントスタイルガイド](https://atom.io/docs/v0.85.0/contributing#documentation-styleguide)に従って文書化する
++ ファイルの最後に改行を入れる
++ 以下の順番に配置する必要がある
+  + ビルトインNodeモジュール(```path```とか)
+  + ビルトインAtomとAtom Shellモジュール(```atom```,```shell``とか)
+  + ローカルモジュール(相対パスを使う)
++ 以下の順番でクラスプロパティを配置する:
+  + クラスメソッドとプロパティ(メソッドは@から始める)
+  + インスタンスメソッドとプロパティ
 + Avoid platform-dependent code:
-  + Use require('atom').fs.getHomeDirectory() to get the home directory.
-  + Use path.join() to concatenate filenames.
++ プラットフォーム依存のコードは避ける:
+  + ホームディレクトリを取得するには```require('atom').fs.getHomeDirectory()```を使う
+  + ファイル名を結合するには```path.join()```を使う
   + Use os.tmpdir() rather than /tmp when you need to reference the temporary directory.
+  + テンポラリディレクトリを参照する時は```/tmp```よりむしろ```os.tmpdir()```を使う
 
 #### コミットメッセージガイドライン
 
-+ Use the present tense ("Add feature" not "Added feature")
-+ Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-+ Limit the first line to 72 characters or less
-+ Reference issues and pull requests liberally
-+ Consider starting the commit message with an applicable emoji:
-  + :lipstick: when improving the format/structure of the code
-  + :racehorse: when improving performance
-  + :non-potable_water: when plugging memory leaks
-  + :memo: when writing docs
-  + :bulb: Check out the Emoji Cheat Sheet for more ideas.
++ 現在形を使う("機能を追加した"ではなく"機能を追加する")
++ 命令形を使う("カーソルを動かして"ではなく"カーソルを動かす")
++ 最初の行を72文字以下に抑える
++ イシューやプルリクエストへの参照をたくさんつける
++ メッセージの最初につける利用可能な絵文字を検討する
+  + :lipstick: コードのフォーマットや構造を改善した時
+  + :racehorse: パフォーマンスを完全した時
+  + :non-potable_water: メモリリークを直した時
+  + :memo: ドキュメントを書いた時
+  + :bulb: 詳細は絵文字チートシートを確認
 
 ### CoffeeScriptスタイルガイド
 
-+ Use parentheses if it improves code clarity.
++ もしコードの可読性を向上させたいなら丸カッコを使う
 + Prefer alphabetic keywords to symbolic keywords:
-  + a is b instead of a == b
-+ Avoid spaces inside the curly-braces of hash literals:
-  + {a: 1, b: 2} instead of { a: 1, b: 2 }
-+ Set parameter defaults without spaces around the equal sign:
-  + clear = (count=1) -> instead of clear = (count = 1) ->
-+ Include a single line of whitespace between methods.
++ シンボルキーワードよりアルファベットキーワードを使う
+  + ```a == b```の代わりに```a is b```を使う
++ ハッシュ文字列内の波括弧内のスペースは避ける
+  + ```{ a: 1, b: 2 }```ではなく```{a: 1, b: 2}```
++ パラメータをセットするイコール記号の周りはスペース無しで:
+  + ```clear = (count = 1) ->```ではなく```clear = (count=1) -> ```
++ メソッドとメソッドの間には空白行を入れる
 
 ### ドキュメントスタイルガイド
 
-+ Use TomDoc.
-+ Use Markdown.
++ [TomDoc](http://tomdoc.org/)を使う
++ [Markdown](https://daringfireball.net/projects/markdown/)を使う
 + Reference methods and classes in markdown with the custom {} notation:
-  + Reference classes with {ClassName}
-  + Reference instance methods with {ClassName::methodName}
-  + Reference class methods with {ClassName.methodName}
++ マークダウン内の参照メソッドとクラスはカスタム```{}```記号で:
+  + クラス参照```{ClassName}```
+  + インスタンスメソッド参照```{ClassName::methodName}```
+  + クラスメソッド参照```{ClassName.methodName}```
 
 #### 例
 
@@ -705,4 +709,5 @@ disablePackage: (name, options, callback) ->
 # 参照
 [Atom](https://atom.io/)  
 [Documentation](https://atom.io/docs/latest/)  
-[GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown)
+[GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown)  
+[Atom Organization](https://github.com/atom)  
